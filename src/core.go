@@ -137,7 +137,7 @@ func Run(opts *Options, revision string) {
 	}
 	patternBuilder := func(runes []rune) *Pattern {
 		return BuildPattern(
-			opts.Fuzzy, opts.FuzzyAlgo, opts.Extended, opts.Case, opts.Normalize, forward,
+			opts.Fuzzy, opts.Migemo, opts.FuzzyAlgo, opts.Extended, opts.Case, opts.Normalize, forward,
 			opts.Filter == nil, opts.Nth, opts.Delimiter, runes)
 	}
 	matcher := NewMatcher(patternBuilder, sort, opts.Tac, eventBox)
