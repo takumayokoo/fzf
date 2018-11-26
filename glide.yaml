@@ -14,3 +14,5 @@ import:
   version: 558b6879de74bc843225cde5686419267ff707ca
   subpackages:
   - ssh/terminal
+- package: github.com/koron/gomigemo
+  version: ecc19e3cccb46036b3e4adfcbf2ddc6f321014c2
