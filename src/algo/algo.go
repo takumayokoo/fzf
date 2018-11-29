@@ -84,6 +84,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"github.com/junegunn/fzf/src/migemo"
 	"github.com/junegunn/fzf/src/util"
 )
 
@@ -335,6 +336,15 @@ func debugV2(T []rune, pattern []rune, F []int32, lastIdx int, H []int16, C []in
 			}
 		}
 		fmt.Println()
+	}
+}
+
+func Migemo(caseSensitive bool, normalize bool, forward bool, text *util.Chars, pattern []rune, withPos bool, slab *util.Slab) (Result, *[]int) {
+	i := migemo.FindStringIndex(text.ToString(), string(pattern))
+	if i != nil {
+		return Result{i[0], i[0] + i[1], i[1] - i[0]}, nil
+	} else {
+		return Result{-1, -1, 0}, nil
 	}
 }
 
