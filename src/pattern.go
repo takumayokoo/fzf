@@ -83,7 +83,7 @@ func clearChunkCache() {
 }
 
 // BuildPattern builds Pattern object from the given arguments
-func BuildPattern(fuzzy bool, fuzzyAlgo algo.Algo, extended bool, caseMode Case, normalize bool, forward bool,
+func BuildPattern(fuzzy bool, migemo bool, fuzzyAlgo algo.Algo, extended bool, caseMode Case, normalize bool, forward bool,
 	cacheable bool, nth []Range, delimiter Delimiter, runes []rune) *Pattern {
 
 	var asString string
@@ -105,7 +105,7 @@ func BuildPattern(fuzzy bool, fuzzyAlgo algo.Algo, extended bool, caseMode Case,
 	termSets := []termSet{}
 
 	if extended {
-		termSets = parseTerms(fuzzy, caseMode, normalize, asString)
+		termSets = parseTerms(fuzzy, migemo, caseMode, normalize, asString)
 	Loop:
 		for _, termSet := range termSets {
 			for idx, term := range termSet {
@@ -152,7 +152,7 @@ func BuildPattern(fuzzy bool, fuzzyAlgo algo.Algo, extended bool, caseMode Case,
 	return ptr
 }
 
-func parseTerms(fuzzy bool, caseMode Case, normalize bool, str string) []termSet {
+func parseTerms(fuzzy bool, migemo bool, caseMode Case, normalize bool, str string) []termSet {
 	str = strings.Replace(str, "\\ ", "\t", -1)
 	tokens := _splitRegex.Split(str, -1)
 	sets := []termSet{}
@@ -169,6 +169,9 @@ func parseTerms(fuzzy bool, caseMode Case, normalize bool, str string) []termSet
 		}
 		if !fuzzy {
 			typ = termExact
+		}
+		if migemo {
+			typ = termMigemo
 		}
 
 		if len(set) > 0 && !afterBar && text == "|" {

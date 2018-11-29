@@ -21,6 +21,7 @@ const usage = `usage: fzf [options]
     -x, --extended        Extended-search mode
                           (enabled by default; +x or --no-extended to disable)
     -e, --exact           Enable Exact-match
+    --migemo              Enable Migemo-match
     --algo=TYPE           Fuzzy matching algorithm: [v1|v2] (default: v2)
     -i                    Case-insensitive match (default: smart-case match)
     +i                    Case-sensitive match
@@ -152,6 +153,7 @@ type previewOpts struct {
 // Options stores the values of command-line options
 type Options struct {
 	Fuzzy       bool
+	Migemo      bool
 	FuzzyAlgo   algo.Algo
 	Extended    bool
 	Case        Case
@@ -982,6 +984,8 @@ func parseOptions(opts *Options, allArgs []string) {
 			opts.Extended = true
 		case "-e", "--exact":
 			opts.Fuzzy = false
+		case "--migemo":
+			opts.Migemo = true
 		case "--extended-exact":
 			// Note that we now don't have --no-extended-exact
 			opts.Fuzzy = false
