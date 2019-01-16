@@ -340,7 +340,7 @@ func debugV2(T []rune, pattern []rune, F []int32, lastIdx int, H []int16, C []in
 }
 
 func Migemo(caseSensitive bool, normalize bool, forward bool, text *util.Chars, pattern []rune, withPos bool, slab *util.Slab) (Result, *[]int) {
-	i := migemo.FindStringIndex(text.ToString(), string(pattern))
+	i := migemo.FindStringIndex(caseSensitive, text.ToString(), string(pattern))
 	if i != nil {
 		return Result{i[0], i[0] + i[1], i[1] - i[0]}, nil
 	} else {

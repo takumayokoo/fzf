@@ -3,6 +3,7 @@ package migemo
 import (
 	"os"
 	"regexp"
+	"strings"
 	"sync"
 	"unicode/utf8"
 
@@ -47,8 +48,12 @@ func regex(pattern string) *regexp.Regexp {
 	return re
 }
 
-func FindStringIndex(s, pattern string) []int {
+func FindStringIndex(caseSensitive bool, s, pattern string) []int {
 	v := regex(pattern)
+
+	if !caseSensitive {
+		s = strings.ToLower(s)
+	}
 
 	if i := v.FindStringIndex(s); len(i) != 0 {
 		b := []byte(s)
